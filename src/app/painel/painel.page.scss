@@ -1,0 +1,79 @@
+.painel-content {
+  background: #111;
+  color: #fff;
+}
+
+.painel-header h2 {
+  color: #fff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+ion-note.clock-note {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-right: 12px;
+}
+
+.calls-list {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.call-row {
+  border-radius: 12px;
+  padding: 16px 20px;
+  background: #1e1e1e;
+  border-left: 6px solid #555;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s;
+
+  &[data-type="SP"] { border-left-color: var(--ion-color-warning); }
+  &[data-type="SG"] { border-left-color: var(--ion-color-primary); }
+  &[data-type="SE"] { border-left-color: var(--ion-color-success); }
+
+  &.latest {
+    background: #2a2a2a;
+    transform: scale(1.03);
+    box-shadow: 0 4px 20px rgba(255,255,255,0.1);
+
+    .ticket-num {
+      font-size: 2.4rem;
+    }
+  }
+
+  .ticket-num {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #fff;
+    min-width: 140px;
+  }
+
+  .call-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .booth-name {
+      color: #ccc;
+      font-size: 1rem;
+    }
+
+    .called-time {
+      color: #888;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.empty-msg {
+  color: #666;
+  margin-top: 60px;
+  p { font-size: 1rem; }
+}

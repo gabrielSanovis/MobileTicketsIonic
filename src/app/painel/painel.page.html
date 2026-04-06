@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Painel de Chamadas</ion-title>
+    <ion-note slot="end" class="clock-note" *ngIf="clock">
+      {{ clock.simTime | date:'HH:mm' }}
+    </ion-note>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="painel-content">
+
+  <div class="painel-header ion-text-center ion-padding-top">
+    <h2>Últimas Chamadas</h2>
+  </div>
+
+  <div class="calls-list" *ngIf="recentCalls.length > 0; else empty">
+    <div
+      *ngFor="let call of recentCalls; let i = index"
+      class="call-row"
+      [class.latest]="i === 0"
+      [attr.data-type]="call.type">
+      <div class="ticket-num">{{ call.ticketId }}</div>
+      <div class="call-meta">
+        <ion-badge [color]="typeColor(call.type)">{{ call.type }} — {{ typeLabel(call.type) }}</ion-badge>
+        <span class="booth-name">{{ call.boothName }}</span>
+        <span class="called-time">{{ call.calledAt | date:'HH:mm' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #empty>
+    <div class="ion-text-center ion-padding-top empty-msg">
+      <ion-icon name="tv-outline" style="font-size:4rem; color:#555"></ion-icon>
+      <p>Nenhuma chamada ainda.</p>
+    </div>
+  </ng-template>
+
+</ion-content>
