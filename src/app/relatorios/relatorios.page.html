@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>Relatórios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Date picker -->
+  <ion-list *ngIf="availableDates.length > 0">
+    <ion-item>
+      <ion-label>Data</ion-label>
+      <ion-select [(ngModel)]="selectedDate" (ngModelChange)="loadReport()" interface="action-sheet">
+        <ion-select-option *ngFor="let d of availableDates" [value]="d">{{ d }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="!report || availableDates.length === 0" class="ion-text-center ion-margin-top">
+    <ion-icon name="document-text-outline" style="font-size:4rem; color:#aaa"></ion-icon>
+    <p>Nenhum dado disponível. Emita senhas para gerar relatórios.</p>
+  </div>
+
+  <ng-container *ngIf="report">
+
+    <!-- Summary cards -->
+    <ion-grid class="ion-margin-top">
+      <ion-row>
+        <ion-col size="6">
+          <ion-card>
+            <ion-card-content class="stat-card">
+              <div class="stat-number">{{ report.totalIssued }}</div>
+              <div class="stat-label">Emitidas</div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card>
+            <ion-card-content class="stat-card">
+              <div class="stat-number success">{{ report.totalServed }}</div>
+              <div class="stat-label">Atendidas</div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card>
+            <ion-card-content class="stat-card">
+              <div class="stat-number warning">{{ report.totalNoShow }}</div>
+              <div class="stat-label">Não compareceu</div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card>
+            <ion-card-content class="stat-card">
+              <div class="stat-number medium">{{ report.totalDiscarded }}</div>
+              <div class="stat-label">Descartadas</div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- By type -->
+    <ion-card>
+      <ion-card-header><ion-card-title>Por Tipo</ion-card-title></ion-card-header>
+      <ion-card-content>
+        <table class="type-table">
+          <thead>
+            <tr><th>Tipo</th><th>Emitidas</th><th>Atendidas</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><ion-badge color="warning">SP</ion-badge></td>
+              <td>{{ report.issuedByType.SP }}</td>
+              <td>{{ report.servedByType.SP }}</td>
+            </tr>
+            <tr>
+              <td><ion-badge color="primary">SG</ion-badge></td>
+              <td>{{ report.issuedByType.SG }}</td>
+              <td>{{ report.servedByType.SG }}</td>
+            </tr>
+            <tr>
+              <td><ion-badge color="success">SE</ion-badge></td>
+              <td>{{ report.issuedByType.SE }}</td>
+              <td>{{ report.servedByType.SE }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="ion-margin-top"><strong>TM médio de atendimento:</strong> {{ formatMin(report.averageTM) }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Detail table -->
+    <ion-card>
+      <ion-card-header><ion-card-title>Detalhamento</ion-card-title></ion-card-header>
+      <ion-card-content class="table-wrapper">
+        <table class="detail-table">
+          <thead>
+            <tr>
+              <th>Senha</th>
+              <th>Tipo</th>
+              <th>Emissão</th>
+              <th>Chamada</th>
+              <th>Guichê</th>
+              <th>Status</th>
+              <th>TM (min)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of report.details">
+              <td>{{ d.id }}</td>
+              <td><ion-badge [color]="statusColor(d.status) === 'success' ? typeColor(d.type) : typeColor(d.type)">{{ d.type }}</ion-badge></td>
+              <td>{{ formatDate(d.issuedAt) }}</td>
+              <td>{{ formatDate(d.calledAt) }}</td>
+              <td>{{ d.boothId ?? '—' }}</td>
+              <td><ion-badge [color]="statusColor(d.status)">{{ statusLabel(d.status) }}</ion-badge></td>
+              <td>{{ d.serviceMinutes !== undefined ? formatMin(d.serviceMinutes) : '—' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ion-card-content>
+    </ion-card>
+
+  </ng-container>
+
+</ion-content>
