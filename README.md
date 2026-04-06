@@ -50,6 +50,8 @@ O Totem é a interface voltada ao paciente. Apresenta três botões grandes para
 
 Ao pressionar um botão, o sistema emite a senha com identificador único no formato `YYMMDD-TTSSS` (ex.: `260405-SP001`) e exibe um modal de confirmação com o número para o paciente. O header exibe o horário simulado e o status do expediente. Fora do expediente (07:00–17:00 simulado), os botões ficam desabilitados. O ícone ⚙ abre o modal de **Configurações**.
 
+<img width="425" height="849" alt="image" src="https://github.com/user-attachments/assets/1f6eed42-8e25-42b7-b1e1-8942df5f117c" />
+
 ---
 
 ### Tab 2 — Painel de Chamadas (TV)
@@ -63,6 +65,8 @@ Painel de estilo "televisão" que exibe as **últimas 5 senhas chamadas** em tem
 
 Atualiza automaticamente via Observable sem necessidade de recarregar a tela.
 
+<img width="424" height="847" alt="image" src="https://github.com/user-attachments/assets/d243be9e-a4e4-48b0-8183-4e4c54425064" />
+
 ---
 
 ### Tab 3 — Atendente (AA)
@@ -75,6 +79,8 @@ Interface do atendente para gerenciar o fluxo de atendimento:
 4. **Painel de atendimento ativo** — exibe a senha em atendimento, tipo, e um timer cronômetro (tempo real em segundos). O atendimento é finalizado automaticamente conforme o tempo de serviço simulado (SP: 10–20 min, SG: 2–8 min, SE: ~1 min).
 5. **Finalizar Atendimento** — botão para encerramento manual antecipado.
 
+<img width="424" height="850" alt="image" src="https://github.com/user-attachments/assets/1da0185b-a0b7-401e-b0f2-8a1408f7dbb8" />
+
 ---
 
 ### Tab 4 — Relatórios
@@ -86,6 +92,8 @@ Relatórios diários do sistema:
 - **Tabela por tipo** — breakdown SP / SG / SE de emitidas e atendidas.
 - **TM médio** — tempo médio de atendimento (minutos simulados).
 - **Tabela detalhada** — todas as senhas com hora de emissão, hora da chamada, guichê, status e tempo de atendimento.
+
+<img width="422" height="844" alt="image" src="https://github.com/user-attachments/assets/dee063dd-b8e0-4a3e-a668-62df53fc91ee" />
 
 ---
 
@@ -138,13 +146,3 @@ src/app/
 ├── configuracoes/            — Modal de configurações
 └── tabs/                     — Shell das abas
 ```
-
----
-
-## Fora do Escopo
-
-- Backend / banco de dados real
-- Exportação de relatórios (PDF/CSV)
-- Autenticação de usuários
-- Notificações push
-- Multitenancy
