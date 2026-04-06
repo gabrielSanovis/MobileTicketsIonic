@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Totem — Emissão de Senhas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openConfig()">
+        <ion-icon name="settings-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Clock & status bar -->
+  <div class="clock-bar ion-text-center">
+    <p class="sim-time" *ngIf="clock">
+      {{ clock.simTime | date:'HH:mm' }}
+      <span class="small"> (tempo simulado)</span>
+    </p>
+    <ion-badge [color]="shiftActive && inShift ? 'success' : 'danger'">
+      {{ shiftActive && inShift ? 'Expediente em andamento' : 'Fora do expediente' }}
+    </ion-badge>
+  </div>
+
+  <!-- Ticket type buttons -->
+  <div class="ticket-buttons ion-margin-top">
+    <ion-card (click)="emitir('SP')" [class.disabled]="!shiftActive || !inShift" button>
+      <ion-card-content class="ion-text-center">
+        <ion-icon name="star" color="warning" class="ticket-icon"></ion-icon>
+        <h2>SP</h2>
+        <p>Atendimento Prioritário</p>
+        <p class="description">Gestantes, idosos, PcD, lactantes</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card (click)="emitir('SG')" [class.disabled]="!shiftActive || !inShift" button>
+      <ion-card-content class="ion-text-center">
+        <ion-icon name="people" color="primary" class="ticket-icon"></ion-icon>
+        <h2>SG</h2>
+        <p>Atendimento Geral</p>
+        <p class="description">Atendimento padrão</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card (click)="emitir('SE')" [class.disabled]="!shiftActive || !inShift" button>
+      <ion-card-content class="ion-text-center">
+        <ion-icon name="flask" color="success" class="ticket-icon"></ion-icon>
+        <h2>SE</h2>
+        <p>Coleta / Exame</p>
+        <p class="description">Entrega de materiais, coleta rápida</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <p class="ion-text-center ion-margin-top" *ngIf="!shiftActive || !inShift">
+    <ion-text color="medium">Acesse <strong>Configurações</strong> (⚙) para iniciar o expediente.</ion-text>
+  </p>
+
+  <!-- Ticket issued modal overlay -->
+  <div class="ticket-overlay" *ngIf="showTicketModal && lastTicket" (click)="closeModal()">
+    <div class="ticket-card" [attr.data-type]="lastTicket.type">
+      <p class="ticket-label">Sua senha</p>
+      <h1 class="ticket-number">{{ lastTicket.id }}</h1>
+      <p class="ticket-type">{{ typeLabel(lastTicket.type) }}</p>
+      <p class="ticket-hint">Aguarde ser chamado</p>
+      <ion-button expand="block" fill="clear" color="light" (click)="closeModal()">Fechar</ion-button>
+    </div>
+  </div>
+
+</ion-content>

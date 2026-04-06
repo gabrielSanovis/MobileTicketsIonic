@@ -1,0 +1,67 @@
+.clock-bar {
+  padding: 12px 0;
+
+  .sim-time {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    .small { font-size: 0.8rem; color: var(--ion-color-medium); }
+  }
+}
+
+.ticket-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  ion-card {
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.1s;
+
+    &:active { transform: scale(0.97); }
+    &.disabled { opacity: 0.4; pointer-events: none; }
+
+    ion-card-content {
+      padding: 24px 16px;
+
+      .ticket-icon { font-size: 3rem; }
+      h2 { font-size: 2rem; font-weight: 800; margin: 8px 0 4px; }
+      p { margin: 2px 0; }
+      .description { font-size: 0.8rem; color: var(--ion-color-medium); }
+    }
+  }
+}
+
+.ticket-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  .ticket-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 32px;
+    text-align: center;
+    min-width: 280px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+
+    &[data-type="SP"] { border-top: 8px solid var(--ion-color-warning); }
+    &[data-type="SG"] { border-top: 8px solid var(--ion-color-primary); }
+    &[data-type="SE"] { border-top: 8px solid var(--ion-color-success); }
+
+    .ticket-label { color: #666; margin: 0 0 4px; }
+    .ticket-number {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #111;
+      margin: 0 0 8px;
+    }
+    .ticket-type { font-size: 1rem; font-weight: 600; color: #444; margin: 0; }
+    .ticket-hint { font-size: 0.85rem; color: #888; margin: 8px 0 16px; }
+  }
+}
