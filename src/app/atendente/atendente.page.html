@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Atendente (AA)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Shift inactive warning -->
+  <ion-card color="danger" *ngIf="!shiftActive">
+    <ion-card-content>
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      Expediente não iniciado. Acesse <strong>Configurações</strong> no Totem.
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Booth selector -->
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Selecionar Guichê</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-select
+        [(ngModel)]="selectedBoothId"
+        (ngModelChange)="selectBooth($event)"
+        placeholder="Escolha o guichê"
+        interface="action-sheet">
+        <ion-select-option *ngFor="let b of booths" [value]="b.id">
+          {{ b.name }} — {{ b.status === 'BUSY' ? 'Em atendimento' : 'Disponível' }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <!-- Queue counts -->
+  <div class="queue-status ion-margin-top">
+    <ion-chip color="warning">
+      <ion-label>SP: {{ queueCounts.SP }}</ion-label>
+    </ion-chip>
+    <ion-chip color="primary">
+      <ion-label>SG: {{ queueCounts.SG }}</ion-label>
+    </ion-chip>
+    <ion-chip color="success">
+      <ion-label>SE: {{ queueCounts.SE }}</ion-label>
+    </ion-chip>
+    <ion-chip color="medium">
+      <ion-label>Total: {{ totalWaiting }}</ion-label>
+    </ion-chip>
+  </div>
+
+  <!-- Current ticket panel -->
+  <ion-card class="current-card ion-margin-top" *ngIf="currentTicket">
+    <ion-card-header>
+      <ion-card-subtitle>Em atendimento</ion-card-subtitle>
+      <ion-card-title>{{ currentTicket.id }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-badge [color]="typeColor(currentTicket.type)" style="margin-bottom:8px">
+        {{ currentTicket.type }}
+      </ion-badge>
+      <p class="timer">Tempo: {{ serviceElapsedStr }}</p>
+      <ion-button expand="block" color="success" (click)="finalize()" class="ion-margin-top">
+        <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+        Finalizar Atendimento
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Call next button -->
+  <ion-button
+    expand="block"
+    color="primary"
+    class="ion-margin-top"
+    [disabled]="!shiftActive || totalWaiting === 0 || selectedBoothId === null || (selectedBooth?.status === 'BUSY')"
+    (click)="callNext()">
+    <ion-icon name="megaphone-outline" slot="start"></ion-icon>
+    Chamar Próxima Senha
+  </ion-button>
+
+  <p class="ion-text-center ion-margin-top" *ngIf="totalWaiting === 0 && shiftActive">
+    <ion-text color="medium">Nenhuma senha aguardando.</ion-text>
+  </p>
+
+</ion-content>

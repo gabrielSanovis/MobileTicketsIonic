@@ -1,0 +1,17 @@
+.queue-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.current-card {
+  border-left: 6px solid var(--ion-color-primary);
+
+  .timer {
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-family: monospace;
+    color: var(--ion-color-dark);
+    margin: 8px 0;
+  }
+}
