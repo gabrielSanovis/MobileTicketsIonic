@@ -8,27 +8,31 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'totem',
+        loadChildren: () => import('../totem/totem.module').then(m => m.TotemPageModule)
       },
       {
-        path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        path: 'painel',
+        loadChildren: () => import('../painel/painel.module').then(m => m.PainelPageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'atendente',
+        loadChildren: () => import('../atendente/atendente.module').then(m => m.AtendentePageModule)
+      },
+      {
+        path: 'relatorios',
+        loadChildren: () => import('../relatorios/relatorios.module').then(m => m.RelatoriosPageModule)
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/totem',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/totem',
     pathMatch: 'full'
   }
 ];
