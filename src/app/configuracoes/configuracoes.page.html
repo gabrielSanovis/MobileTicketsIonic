@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Configurações</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Shift control -->
+  <ion-card [color]="shiftActive ? 'success' : 'light'">
+    <ion-card-header>
+      <ion-card-title>Expediente</ion-card-title>
+      <ion-card-subtitle>07:00 – 17:00 (tempo simulado)</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p *ngIf="shiftActive"><strong>Expediente em andamento.</strong></p>
+      <p *ngIf="!shiftActive"><strong>Expediente encerrado.</strong></p>
+      <div style="display:flex; gap:8px; margin-top:12px">
+        <ion-button expand="block" color="primary" [disabled]="shiftActive" (click)="startShift()">
+          <ion-icon name="play-circle-outline" slot="start"></ion-icon>
+          Iniciar Expediente
+        </ion-button>
+        <ion-button expand="block" color="danger" [disabled]="!shiftActive" (click)="endShift()">
+          <ion-icon name="stop-circle-outline" slot="start"></ion-icon>
+          Encerrar Expediente
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Booths -->
+  <ion-card>
+    <ion-card-header><ion-card-title>Guichês</ion-card-title></ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Número de Guichês</ion-label>
+        <ion-input
+          type="number"
+          [(ngModel)]="boothCount"
+          min="1"
+          max="10"
+          slot="end"
+          style="text-align:right; max-width:80px">
+        </ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="applyBooths()" class="ion-margin-top">
+        Aplicar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Time factor -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Fator de Aceleração</ion-card-title>
+      <ion-card-subtitle>1 seg real = {{ factor }} min simulados</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Fator (×)</ion-label>
+        <ion-input
+          type="number"
+          [(ngModel)]="factor"
+          min="1"
+          max="600"
+          slot="end"
+          style="text-align:right; max-width:80px">
+        </ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="applyFactor()" class="ion-margin-top">
+        Aplicar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Reset -->
+  <ion-card>
+    <ion-card-header><ion-card-title>Redefinir Dados</ion-card-title></ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" color="danger" fill="outline" (click)="clearData()">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        Apagar Todos os Dados
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
